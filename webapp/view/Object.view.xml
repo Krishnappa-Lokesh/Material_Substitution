@@ -1,0 +1,124 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:form="sap.ui.layout.form"
+	controllerName="matsubs.controller.Object">
+	
+	<semantic:FullscreenPage xmlns:semantic="sap.m.semantic" 
+						title="{i18n>objectTitle}" 
+						id="page" 
+						busyIndicatorDelay="{objectView>/delay}" 
+						busy="{objectView>/busy}">
+	
+		<semantic:content id="pageContent">
+			<!-- form -->
+			<form:SimpleForm  
+					title="{i18n>objectFormTitle}" 
+					id="_attributes" 
+					layout="ResponsiveGridLayout"
+					editable="true" 
+					labelSpanXL="3" 
+					labelSpanL="3" 
+					labelSpanM="3" 
+					labelSpanS="12"
+					adjustLabelSpan="false" 
+					singleContainerFullSize="false" 
+					emptySpanXL="4" 
+					emptySpanL="4" 
+					emptySpanM="4" 
+					emptySpanS="0" 
+					columnsXL="1"
+					columnsL="1" 
+					columnsM="1" 
+					>
+				<form:content>
+
+
+					<!-- From Plant -->
+					<Label xmlns="sap.m" id="__label01_copy" text="Source Plant" />
+					<Input xmlns="sap.m" value="{SpWerks}" id="spWerks" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{SpName1}" id="spWerksName" editable="false" />
+					<!-- To Plant -->
+					<Label xmlns="sap.m" id="__label11_copy" text="Destination" />
+					<Input xmlns="sap.m" value="{DeWerks}" id="deWerks" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{DeName1}" id="deWerksName" class="sapUiSmallMarginBottom" editable="false" />
+
+
+
+					<!-- From Material -->
+					<Label xmlns="sap.m" id="__label0_copy" text="From Material" />
+					<Input xmlns="sap.m" value="{FrMatnr}" id="frMatnr" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{FrMaktx}" id="frMaktx" editable="false" />
+
+					<!-- From Material Stock -->
+					<Label xmlns="sap.m" id="__label10_copy" text="Current Stock" />
+					<Input xmlns="sap.m" value="{FrLabst}" id="frLabst" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<CheckBox xmlns="sap.m" id="__box3" text="Use up Stock" editable="false" />
+
+					<Label xmlns="sap.m" id="__label1_copy" text="Quantity" />
+					<Input xmlns="sap.m" value="{FrMenge}" id="frMenge" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{FrMeins}" id="frMeins" width="60px" editable="false" />
+
+					<!-- To Material -->
+					<Label xmlns="sap.m" id="__labe20_copy" text="To Material" />
+					<Input xmlns="sap.m" value="{ToMatnr}" id="toMatnr" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{ToMaktx}" id="toMaktx" editable="false" />
+					<Label xmlns="sap.m" id="__labe21_copy" class="sapUiSmallMarginBottom" text="Quantity" />
+					<Input xmlns="sap.m" value="{ToMenge}" id="toMenge" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<Input xmlns="sap.m" value="{ToMeins}" id="toMeins" width="60px" editable="false" />
+
+					<!-- Additional Details -->
+					<core:Title xmlns:core="sap.ui.core" text="Additional Details"  />
+					<Label xmlns="sap.m" id="__label0" text="From Date" />
+					<DatePicker xmlns="sap.m" value="{path:'FrDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" id="_frDate" editable="false" />
+					<Label xmlns="sap.m" id="__label1" text="Valid Until" />
+					<DatePicker xmlns="sap.m" value="{path:'ToDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" id="_toDate" class="sapUiSmallMarginBottom" editable="false" />
+					<Label xmlns="sap.m" id="__label0_copy3" text="JIRA Reference" />
+					<Input xmlns="sap.m" value="{Zjira}" id="__input0_copy2" editable="false" />
+
+					<Label xmlns="sap.m" id="__label0_copy31" text="Documents" />
+					<CheckBox xmlns="sap.m" id="__box0"  text="Update in Stock Transport Orders"  editable="false"  />
+					<CheckBox xmlns="sap.m" id="__box0_copy" text="Update in Shopping Carts" editable="false"  />
+				</form:content>
+			</form:SimpleForm>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress" />
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress" />
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton xmlns:footerbar="sap.ushell.ui.footerbar" title="{objectView>/saveAsTileTitle}" id="shareTile" />
+		</semantic:saveAsTileAction>
+	<semantic:mainAction>
+	    <semantic:MainAction id="__action0" text="Done" press="onDone" />
+	</semantic:mainAction>
+	</semantic:FullscreenPage>
+</mvc:View>

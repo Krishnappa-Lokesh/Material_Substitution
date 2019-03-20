@@ -1,0 +1,294 @@
+<mvc:View xmlns="sap.m" 
+		xmlns:core="sap.ui.core" 
+		xmlns:l="sap.ui.layout" 
+		xmlns:mvc="sap.ui.core.mvc" 
+		xmlns:semantic="sap.m.semantic"
+		xmlns:footerbar="sap.ushell.ui.footerbar" 
+		xmlns:sap.ui.layout.form="sap.ui.layout.form" 
+		controllerName="matsubs.controller.Create">
+	<semantic:FullscreenPage id="page" 
+							
+							title="{i18n>createTitle}" 
+							busy="{createView>/busy}"
+							busyIndicatorDelay="{createView>/delay}">
+		<semantic:content>
+			<!--Single column form -->
+			<sap.ui.layout.form:SimpleForm 
+					id="materialSubsForm" 
+					title="{i18n>createFormTitle}" 
+					editable="true" 
+					labelSpanXL="3" 
+					labelSpanL="3" 
+					labelSpanM="3" 
+					labelSpanS="12"
+					adjustLabelSpan="false" 
+					singleContainerFullSize="false" 
+					emptySpanXL="4" 
+					emptySpanL="4" 
+					emptySpanM="4" 
+					emptySpanS="0" 
+					columnsXL="1"
+					columnsL="1" 
+					columnsM="1" 
+					layout="ResponsiveGridLayout" 											
+											>
+
+				<sap.ui.layout.form:content>
+
+					<!-- From Plant -->
+					<Label text="Supplying Plant" id="__label01_copy"/>
+					<Input id="spWerks" editable="false" type="Number"
+						value="{ path : 'SpWerks', type : 'sap.ui.model.type.String', constraints : { minLength: 1, maxLength: 4 } }">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+
+					<ComboBox id="spWerksComboBox" 
+							name="spWerksComboBox" 
+							items="{modelVhPlants>/plantsSet}" 
+							selectionChange="onCbSelectionChange" 
+							required="true" 
+							placeholder="Plant"
+							>
+						<core:ListItem 
+									key="{modelVhPlants>Werks}" 
+									text="{modelVhPlants>Name1}"   
+									id="spWerksListItem"/>
+					</ComboBox>
+
+					<!-- To Plant -->
+					<Label text="Receiving Plant" id="__label11_copy"/>
+					<Input id="deWerks" editable="false" type="Number"
+						value="{ path : 'DeWerks', type : 'sap.ui.model.type.String', constraints : { minLength: 1, maxLength: 4 } }">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+
+					<ComboBox id="deWerksComboBox" 
+							name="deWerksComboBox" 
+							items="{modelVhPlants>/plantsSet}" 
+							selectionChange="onCbSelectionChange" 
+							required="true" 
+							placeholder="Plant"
+							>
+						<core:ListItem 
+									key="{modelVhPlants>Werks}" 
+									text="{modelVhPlants>Name1}"   
+									id="deWerksListItem"/>
+					</ComboBox>
+
+						
+					<!-- From Material -->
+<!--					<core:Title text="From " level="Auto"/> -->
+					<Label text="From Material" id="__label0_copy"/>
+					<Input id="frMatnr" editable="false" 
+						value="{FrMatnr}">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+
+					<!-- From Material Description  -->
+					<Input id="frMaktx" 
+							name="frMaktx"
+							editable="true"  
+							
+							showSuggestion="true"
+							showTableSuggestionValueHelp="false"
+							suggestionItemSelected="matnrSeleted"
+							suggestionRows="{modelVhMaterial>/materialSet}">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Name"/>
+							</Column>
+							<Column
+								hAlign="Center"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Material ID"/>
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+							<cells>
+								<Label text="{modelVhMaterial>Description}"/>
+								<Label text="{modelVhMaterial>Material}"/>
+							</cells>
+							</ColumnListItem>
+						</suggestionRows>
+					</Input>			
+							
+					<!-- From Material Stock -->
+					<Label xmlns="sap.m" id="__label10_copy" text="Current Stock" />
+					<Input xmlns="sap.m" value="{FrLabst}" id="frLabst" editable="false">
+						<layoutData>
+							<l:GridData xmlns:l="sap.ui.layout" span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
+					<CheckBox id="checkBoxUstk" 
+							name="checkBoxUstk" 
+							select="onCheckBoxSelect"  
+							editable="true" 
+							text="Use up Stock"/>
+
+
+					<!-- From Quantity  -->
+					<Label text="Quantity" id="__label1_copy"/>
+					<Input id="frMenge" editable="true" type="Number"
+						value="{ path: 'FrMenge', 
+								type : 'sap.ui.model.odata.type.Decimal', 
+								constraints : { minimum: 1, precision: 4, scale: 2 } }">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+
+					<!-- From UOM  -->
+					<Input id="frMeins" editable="false" value="{FrMeins}" width="60px"/>
+<!--					<ComboBox id="frMeinsComboBox" 
+							name="frMeinsComboBox" 
+							items="{modelVhMaterial>uoms}" 
+							selectionChange="onCbSelectionChange" 
+							required="true" 
+							placeholder="UOM"
+							>
+						<core:ListItem 
+									key="{modelVhMaterial>AltUOM}" 
+									text="{modelVhMaterial>AltUOMDescription}"   
+									id="frMeinsListItem"/>
+						<layoutData>
+							<l:GridData span="XL1 L2 M2 S4"/>
+						</layoutData>
+
+					</ComboBox>
+-->
+
+
+					<!-- To Material  -->
+					<!--<core:Title text="To "/>-->
+					<Label text="To Material" id="__labe20_copy"/>
+					<Input id="toMatnr" editable="false" 
+						value="{ToMatnr}">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<!-- To Material Description -->
+					<Input id="toMaktx" 
+							name="toMaktx"
+							editable="true"  
+							
+							showSuggestion="true"
+							showTableSuggestionValueHelp="false"
+							suggestionItemSelected="matnrSeleted"
+							suggestionRows="{modelVhMaterial>/materialSet}">
+						<suggestionColumns>
+							<Column
+								hAlign="Begin"
+								popinDisplay="Inline"
+								demandPopin="true">
+								<Label text="Name"/>
+							</Column>
+							<Column
+								hAlign="Center"
+								popinDisplay="Inline"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Label text="Material ID"/>
+							</Column>
+						</suggestionColumns>
+						<suggestionRows>
+							<ColumnListItem>
+							<cells>
+								<Label text="{modelVhMaterial>Description}"/>
+								<Label text="{modelVhMaterial>Material}"/>
+							</cells>
+							</ColumnListItem>
+						</suggestionRows>
+					</Input>			
+
+					<!-- To Quantity -->
+					<Label text="Quantity" id="__labe21_copy" class="sapUiSmallMarginBottom"/>
+					<Input id="toMenge" editable="true" type="Number"
+						value="{ path: 'ToMenge', type : 'sap.ui.model.odata.type.Decimal', constraints : { minimum: 1, precision: 3, scale: 2 } }">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<!-- To UOM -->
+					<Input id="toMeins" editable="false" value="{ToMeins}" width="60px"/>
+<!--					<ComboBox id="toMeinsComboBox" 
+							name="toMeinsComboBox" 
+							items="{modelVhMaterial>uoms}" 
+							selectionChange="onCbSelectionChange" 
+							required="true" 
+							placeholder="UOM"
+							>
+						<core:ListItem 
+									key="{modelVhMaterial>AltUOM}" 
+									text="{modelVhMaterial>AltUOMDescription}"   
+									id="toMeinsListItem"/>
+						<layoutData>
+							<l:GridData span="XL1 L2 M2 S4"/>
+						</layoutData>
+
+					</ComboBox> 
+-->
+
+
+
+					<!-- Additioanl Details -->
+					<core:Title text="Additional Details"/>
+
+
+					<Label text="From Date" id="__label0"/>
+					<DatePicker id="_frDate" editable="true"
+						value="{path:'FrDate', 
+						type:'sap.ui.model.type.Date', 
+						formatOptions: { style: 'medium', strictParsing: true}}"/>
+					<Label text="Valid Until" id="__label1"/>
+					<DatePicker id="_toDate" editable="true"						value="{path:'ToDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"
+						class="sapUiSmallMarginBottom"/>
+					<Label text="JIRA Reference" id="__label0_copy3"/>
+					<Input id="__input0_copy2" editable="true"  value="{Zjira}"/>
+
+					<!-- CheckBox for STO -->
+					<!--<core:Title text="Documents to Update"/>-->
+					<Label text="Documents" id="__label0_copy31"/>
+					<CheckBox id="checkBoxSto" 
+							name="checkBoxSto" 
+							select="onCheckBoxSelect"  
+							editable="true" 
+							text="Update in Stock Transport Orders"/>
+					<!-- CheckBox for SC -->
+					<CheckBox id="checkBoxSC"
+							name="checkBoxSC"	
+							select="onCheckBoxSelect"  
+							editable="true" 
+							text="Update in Shopping Carts"/>
+				</sap.ui.layout.form:content>
+			</sap.ui.layout.form:SimpleForm>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{createView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+		<semantic:saveAction>
+			<semantic:SaveAction id="saveActionButton" press="onSave"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancelActionButton" press="onCancel"/>
+		</semantic:cancelAction>
+	</semantic:FullscreenPage>
+</mvc:View>

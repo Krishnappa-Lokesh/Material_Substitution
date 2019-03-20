@@ -1,0 +1,85 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="matsubs.controller.Worklist">
+	<semantic:FullscreenPage xmlns:semantic="sap.m.semantic" title="{i18n>worklistViewTitle}" id="page" >
+		<semantic:content>
+			<Table xmlns="sap.m" id="table" class="sapUiResponsiveMargin"
+				items="{ path: '/Material_SubstitutionSet', sorter: { path: 'FrMaktx', descending: false } }" width="auto"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}" noDataText="{worklistView>/tableNoDataText}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
+						<ToolbarSpacer/>
+						<SearchField id="searchField" width="auto" tooltip="{i18n>worklistSearchTooltip}" search="onSearch"></SearchField>
+						<!-- Add the Personalization button -->
+						<Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
+						</Button>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="priorityColumn" width="" visible="false">
+						<Text id="priorityColumnTitle" text="Priority"/>
+					</Column>
+					<Column id="frMaterialStsColumn" width="5%">
+						<Text id="frMaterialStsColumnTitle" text=""/>
+					</Column>
+					<Column id="frMaterialColumn" mergeDuplicates="true">
+						<Text id="frMaterialColumnTitle" text="{i18n>tableFrMaterialColumnTitle}"/>
+					</Column>
+					<Column id="frUnitNumberColumn">
+						<Text id="frUnitNumberColumnTitle" text="{i18n>tableFrUnitNumberColumnTitle}"/>
+					</Column>
+					<Column id="toMaterialColumn">
+						<Text id="toMaterialColumnTitle" text="{i18n>tableToMaterialColumnTitle}"/>
+					</Column>
+					<Column id="toUnitNumberColumn">
+						<Text id="toUnitNumberColumnTitle" text="{i18n>tableToUnitNumberColumnTitle}"/>
+					</Column>
+					<Column id="spPlantColumn">
+						<Text id="spPlantColumnTitle" text="Supplying Plant"/>
+					</Column>
+					<Column id="dePlantColumn" hAlign="End">
+						<Text id="dePlantColumnTitle" text="Receiving Plant"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<Input
+								value="{ path : 'Zpriority', type : 'sap.ui.model.type.Integer', formatOptions: { minIntegerDigits: 1, maxIntegerDigits: 1 }, constraints: {minimum : 1, maximum : 9} }"
+								id="priorityInput" type="Number"/>
+							<!--Priority ComboBox-->
+							<!--						<ComboBox id="priorityComboBox" items="{localModelItemIds>/itemIds}" 
+						selectionChange="onCbSelectionChange" required="false" >
+							<core:ListItem text="{localModelItemIds>itemValue}" 
+											key="{localModelItemIds>itemId}" 
+											id="priorityListItem"  
+											/>
+						</ComboBox>
+
+-->
+							<ObjectStatus id="__status0" text="" icon="sap-icon://delete" visible="{Lvorm}"/>
+							<ObjectIdentifier title="{FrMatnr}" text="{FrMaktx}" titleActive="true"/>
+							<ObjectNumber number="{ path: 'FrMenge', formatter: '.formatter.numberUnit' } {FrMeins}"/>
+							<ObjectIdentifier title="{ToMatnr}" text="{ToMaktx}"/>
+							<ObjectNumber number="{ path: 'ToMenge', formatter: '.formatter.numberUnit' } {ToMeins} "/>
+							<ObjectIdentifier title="{SpWerks}"/>
+							<ObjectIdentifier title="{DeWerks}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton xmlns:footerbar="sap.ushell.ui.footerbar" title="{worklistView>/saveAsTileTitle}" id="shareTile"/>
+		</semantic:saveAsTileAction>
+		<semantic:addAction>
+			<semantic:AddAction id="addButton" press="onNewButtonPressed" tooltip="Add New Entry"/>
+		</semantic:addAction>
+	</semantic:FullscreenPage>
+</mvc:View>
